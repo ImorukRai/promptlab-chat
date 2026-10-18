@@ -1,5 +1,8 @@
 # PromptLab Chat
 
+<img width="1437" height="847" alt="image" src="https://github.com/user-attachments/assets/c22101de-2dd2-4527-8f60-511b1887329b" />
+
+
 Um projeto de chat com Inteligência Artificial desenvolvido para explorar agentes conversacionais e experimentar como diferentes instruções influenciam as respostas de um modelo de linguagem.
 
 ## Tecnologias
