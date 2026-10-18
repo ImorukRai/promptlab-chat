@@ -5,6 +5,7 @@ from pathlib import Path
 import httpx
 from dotenv import load_dotenv
 
+
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 PROMPT_PATH = Path(__file__).parent / "prompts" / "system.txt"
 
@@ -15,12 +16,15 @@ MODEL = "openrouter/free"
 
 
 def get_system_prompt() -> str:
-    """Carrega as instruções do agente."""
+    """Carrega o prompt original salvo no backend."""
     return PROMPT_PATH.read_text(encoding="utf-8")
 
 
-def generate_response(messages: list[dict[str, str]]) -> str:
-    """Envia o histórico ao modelo e retorna sua resposta."""
+def generate_response(
+    messages: list[dict[str, str]],
+    system_prompt: str | None = None,
+) -> str:
+    """Envia o histórico e o prompt escolhido para a LLM."""
 
     api_key = os.getenv("OPENROUTER_API_KEY")
 
@@ -29,8 +33,14 @@ def generate_response(messages: list[dict[str, str]]) -> str:
             "A variável OPENROUTER_API_KEY não foi configurada."
         )
 
+    active_prompt = (
+        system_prompt
+        if system_prompt is not None
+        else get_system_prompt()
+    )
+
     api_messages = [
-        {"role": "system", "content": get_system_prompt()},
+        {"role": "system", "content": active_prompt},
         *messages,
     ]
 

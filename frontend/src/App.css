@@ -1,48 +1,205 @@
 
 .app {
+  min-height: 100vh;
+  padding: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.workspace {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
   width: 100%;
-  min-height: 100vh;
-  padding: 32px 20px;
+  max-width: 1100px;
+  height: min(780px, calc(100vh - 64px));
+  min-height: 480px;
+  margin: auto;
 }
 
 .chat-container {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 760px;
-  height: min(780px, calc(100vh - 64px));
-  min-height: 400px;
   overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: 22px;
-  background: var(--panel-background);
-  box-shadow: 0 20px 70px rgb(0 0 0 / 8%);
+  border: 1px solid var(--border-color, #303030);
+  border-radius: 20px;
+  background: var(--surface-color, #171717);
 }
 
-@media (max-width: 600px) {
+.chat-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color, #303030);
+}
+
+.chat-toolbar__label {
+  color: var(--text-secondary, #a1a1aa);
+  font-size: 13px;
+}
+
+.prompt-toggle,
+.prompt-close {
+  border: 1px solid var(--border-color, #404040);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-color, #f5f5f5);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.prompt-toggle {
+  padding: 9px 12px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.prompt-toggle:hover,
+.prompt-toggle--active {
+  background: var(--hover-color, #292929);
+  border-color: #666;
+}
+
+.prompt-panel {
+  flex: 0 0 360px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-left: 16px;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border-color, #303030);
+  border-radius: 20px;
+  background: var(--surface-color, #171717);
+  animation: prompt-panel-enter 0.2s ease-out;
+}
+
+.prompt-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.prompt-panel__header h2 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.prompt-panel__header p {
+  margin: 6px 0 0;
+  color: var(--text-secondary, #a1a1aa);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.prompt-close {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.prompt-close:hover {
+  background: var(--hover-color, #292929);
+}
+
+.prompt-editor {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  resize: none;
+  padding: 14px;
+  border: 1px solid var(--border-color, #383838);
+  border-radius: 12px;
+  outline: none;
+  background: var(--input-color, #101010);
+  color: var(--text-color, #f5f5f5);
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  tab-size: 2;
+}
+
+.prompt-editor:focus {
+  border-color: #777;
+}
+
+.prompt-editor:disabled {
+  opacity: 0.6;
+}
+
+.prompt-panel__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--text-secondary, #a1a1aa);
+  font-size: 11px;
+}
+
+.prompt-error {
+  margin: 0;
+  padding: 10px 16px;
+  color: #fca5a5;
+  font-size: 13px;
+}
+
+@keyframes prompt-panel-enter {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 850px) {
   .app {
-    padding: 0;
-  }
-
-  .chat-container {
-    height: 100vh;
-    min-height: 0;
-    border: none;
-    border-radius: 0;
-  }
-
-  .chat-header {
     padding: 16px;
   }
 
-  .chat-messages {
-    padding: 18px 14px;
+  .workspace {
+    height: calc(100vh - 32px);
   }
 
-  .message-input {
-    margin: 0 12px 12px;
+  .prompt-panel {
+    flex-basis: 300px;
+    margin-left: 10px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 650px) {
+  .app {
+    padding: 10px;
+  }
+
+  .workspace {
+    flex-direction: column;
+    height: calc(100vh - 20px);
+    gap: 10px;
+  }
+
+  .chat-container {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .prompt-panel {
+    flex: 0 0 42%;
+    min-height: 180px;
+    margin-left: 0;
   }
 }

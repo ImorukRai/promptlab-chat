@@ -15,7 +15,6 @@ app = FastAPI(
     version="0.1.0",
 )
 
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -35,6 +34,7 @@ class Message(BaseModel):
 
 class ChatRequest(BaseModel):
     messages: list[Message] = Field(min_length=1, max_length=100)
+    system_prompt: str | None = Field(default=None, max_length=20000)
 
 
 class ChatResponse(BaseModel):
@@ -44,7 +44,6 @@ class ChatResponse(BaseModel):
 
 @app.get("/")
 def health_check():
-    """Verifica se a API está funcionando."""
     return {
         "status": "ok",
         "service": "PromptLab Chat API",
@@ -53,7 +52,7 @@ def health_check():
 
 @app.get("/api/prompt")
 def get_prompt():
-    """Retorna o prompt do agente para o painel de visualização."""
+    """Retorna o prompt original salvo no backend."""
     try:
         return {"prompt": get_system_prompt()}
     except OSError as error:
@@ -65,7 +64,7 @@ def get_prompt():
 
 @app.post("/api/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
-    """Recebe o histórico da conversa e retorna uma resposta da LLM."""
+    """Gera uma resposta usando o prompt enviado pelo frontend."""
 
     if request.messages[-1].role != "user":
         raise HTTPException(
@@ -79,7 +78,10 @@ def chat(request: ChatRequest):
             for message in request.messages
         ]
 
-        answer = generate_response(history)
+        answer = generate_response(
+            history,
+            system_prompt=request.system_prompt,
+        )
 
         return ChatResponse(content=answer)
 
