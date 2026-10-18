@@ -1,0 +1,55 @@
+
+.message-input {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 18px 18px;
+  padding: 8px 10px 8px 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  background: var(--input-background);
+}
+
+.message-input:focus-within {
+  border-color: #8b76ff;
+}
+
+.message-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-color);
+  font: inherit;
+  font-size: 14px;
+}
+
+.message-input input::placeholder {
+  color: var(--muted-color);
+}
+
+.message-input button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 50%;
+  background: #7c5cfc;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+.message-input button:hover:not(:disabled) {
+  background: #6845ef;
+}
+
+.message-input button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}

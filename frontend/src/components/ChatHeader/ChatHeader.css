@@ -1,0 +1,56 @@
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.agent-avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #6366f1);
+  font-size: 23px;
+}
+
+.agent-info {
+  flex: 1;
+}
+
+.agent-info h2 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.agent-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.header-button {
+  border: none;
+  background: transparent;
+  color: var(--muted-color);
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.header-button:hover {
+  color: var(--text-color);
+}
